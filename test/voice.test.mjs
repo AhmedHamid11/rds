@@ -61,6 +61,27 @@ test("switch keywords are blocked from reaching the model", () => {
   assert.ok(h.say("a", "should RDS global off be a thing?").hookSpecificOutput);
 });
 
+test("slash commands switch voice like the typed keywords", () => {
+  const h = harness();
+  assert.match(h.say("a", "/rds:session-off").reason, /OFF \(set by session\)/);
+  assert.match(h.say("a", "/rds:session-reset").reason, /ON \(set by default\)/);
+  assert.match(h.say("a", "/rds:global-off").reason, /OFF \(set by global\)/);
+  assert.match(h.say("b", "/rds:session-on").reason, /ON \(set by session\)/);
+  assert.match(h.say("c", "/rds:status").reason, /OFF \(set by global\)/);
+  assert.match(h.say("c", "/rds:global-on").reason, /ON \(set by default\)/);
+  assert.ok(h.say("a", "/rds:session-offish").hookSpecificOutput);
+});
+
+test("every command file maps to a switch the hook accepts", () => {
+  const h = harness();
+  const dir = new URL("../commands/", import.meta.url).pathname;
+  for (const file of fs.readdirSync(dir)) {
+    const body = fs.readFileSync(path.join(dir, file), "utf8").split("---").pop().trim();
+    assert.equal(h.say("z", `/rds:${file.replace(/\.md$/, "")}`).decision, "block", file);
+    assert.equal(h.say("z", body).decision, "block", body);
+  }
+});
+
 test("stop rejects an off-contract reply while voice is on", () => {
   const h = harness();
   h.say("a", "hi");

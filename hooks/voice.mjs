@@ -9,8 +9,9 @@ const GLOBAL_FILE = path.join(HOME, "global");
 const SESSIONS_DIR = path.join(HOME, "sessions");
 const SKILL_FILE = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "skills", "rds", "SKILL.md");
 
-const SWITCH = new RegExp(`^\\s*${NAME}\\s+(session|global)\\s+(on|off|reset)\\s*$`, "i");
-const STATUS = new RegExp(`^\\s*${NAME}\\s+status\\s*$`, "i");
+const PREFIX = `(?:${NAME}\\s+|/${NAME}:)`;
+const SWITCH = new RegExp(`^\\s*${PREFIX}(session|global)[\\s-]+(on|off|reset)\\s*$`, "i");
+const STATUS = new RegExp(`^\\s*${PREFIX}status\\s*$`, "i");
 const FREE = /\bfree\b/i;
 const ENDINGS = ["No action needed on your end for this task.", "(silence = 1)"];
 

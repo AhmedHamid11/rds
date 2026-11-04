@@ -20,15 +20,15 @@ Install `mattpocock/skills` alongside it for the skills themselves.
 
 ## Switches
 
-Voice is on by default. Type a switch as the whole message. It never reaches the model.
+Voice is on by default. Use a slash command or type the words as the whole message. Neither reaches the model.
 
-| Message | Effect |
-| --- | --- |
-| `free` anywhere | Plain prose for that reply |
-| `RDS session off` / `on` | This session only |
-| `RDS session reset` | This session follows global again |
-| `RDS global off` / `on` | Every session, every project |
-| `RDS status` | Shows the current setting and what set it |
+| Command | Words | Effect |
+| --- | --- | --- |
+| | `free` anywhere | Plain prose for that reply |
+| `/rds:session-off`, `/rds:session-on` | `RDS session off` / `on` | This session only |
+| `/rds:session-reset` | `RDS session reset` | This session follows global again |
+| `/rds:global-off`, `/rds:global-on` | `RDS global off` / `on` | Every session, every project |
+| `/rds:status` | `RDS status` | Shows the current setting and what set it |
 
 Session beats global. State lives in `~/.claude/RDS/`.
 
