@@ -1,0 +1,13 @@
+{
+  "name": "rds",
+  "version": "2.0.0",
+  "description": "A voice layer for Claude Code. Other skills decide what a reply says; voice decides how it reads. Pair it with mattpocock/skills.",
+  "author": {
+    "name": "AhmedHamid11",
+    "url": "https://github.com/AhmedHamid11"
+  },
+  "repository": "https://github.com/AhmedHamid11/rds",
+  "keywords": ["voice", "output", "reply-format"],
+  "skills": ["./skills/rds"],
+  "hooks": "./hooks/hooks.json"
+}

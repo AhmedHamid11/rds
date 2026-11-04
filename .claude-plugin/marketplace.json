@@ -1,0 +1,17 @@
+{
+  "name": "rds",
+  "owner": {
+    "name": "AhmedHamid11",
+    "url": "https://github.com/AhmedHamid11"
+  },
+  "description": "A voice layer that reshapes every Claude Code reply.",
+  "plugins": [
+    {
+      "name": "rds",
+      "source": "./",
+      "description": "Voice contract for every reply, with global and per-session on/off switches.",
+      "category": "productivity",
+      "keywords": ["voice", "output", "reply-format"]
+    }
+  ]
+}
