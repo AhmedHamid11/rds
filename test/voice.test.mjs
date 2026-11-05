@@ -21,7 +21,7 @@ const harness = () => {
   return { home, run, say, context, stop };
 };
 
-const GOOD = "TAB: fix RDS hooks\n\nDone.\n\nELIR: Hooks now toggle voice.\n\nNo action needed on your end for this task.";
+const GOOD = "**ELIR: Hooks now toggle voice.**\n\n(say expand for more details)\n\nNo action needed on your end for this task.";
 
 test("voice is on by default", () => {
   const h = harness();
@@ -87,9 +87,11 @@ test("stop rejects an off-contract reply while voice is on", () => {
   h.say("a", "hi");
   const r = h.stop("a", "Sure, here you go.");
   assert.equal(r.decision, "block");
-  assert.match(r.reason, /TAB:.*ELIR:.*ending/);
+  assert.match(r.reason, /ELIR:.*ending/);
   assert.equal(h.stop("a", GOOD), null);
-  assert.equal(h.stop("a", "TAB: x\n\nELIR: y\n\n1. ship\n(silence = 1)"), null);
+  assert.equal(h.stop("a", "**ELIR: y**\n\n(say expand for more details)\n\n1. ship\n2. wait\n\n(my recommendation = 2)"), null);
+  assert.equal(h.stop("a", "ELIR: y\n\nNo action needed on your end for this task.").decision, "block");
+  assert.equal(h.stop("a", "**ELIR: y**\n\n1. ship\n(silence = 1)").decision, "block");
 });
 
 test("stop allows one retry, then lets the reply through", () => {
@@ -115,9 +117,9 @@ test("stop reads the final reply from the transcript when no message field is gi
     { type: "user", message: { content: "old prompt" } },
     { type: "assistant", message: { content: [{ type: "text", text: GOOD }] } },
     { type: "user", message: { content: "new prompt" } },
-    { type: "assistant", message: { content: [{ type: "text", text: "TAB: x" }, { type: "tool_use" }] } },
+    { type: "assistant", message: { content: [{ type: "text", text: "Checking." }, { type: "tool_use" }] } },
     { type: "user", message: { content: [{ type: "tool_result" }] } },
-    { type: "assistant", message: { content: [{ type: "text", text: "ELIR: y\n\nNo action needed on your end for this task." }] } },
+    { type: "assistant", message: { content: [{ type: "text", text: "**ELIR: y**\n\nNo action needed on your end for this task." }] } },
   ];
   fs.writeFileSync(transcript, lines.map((l) => JSON.stringify(l)).join("\n"));
   assert.equal(h.stop("a", undefined, { transcript_path: transcript }), null);

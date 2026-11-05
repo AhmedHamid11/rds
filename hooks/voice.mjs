@@ -13,7 +13,8 @@ const PREFIX = `(?:${NAME}\\s+|/${NAME}:)`;
 const SWITCH = new RegExp(`^\\s*${PREFIX}(session|global)[\\s-]+(on|off|reset)\\s*$`, "i");
 const STATUS = new RegExp(`^\\s*${PREFIX}status\\s*$`, "i");
 const FREE = /\bfree\b/i;
-const ENDINGS = ["No action needed on your end for this task.", "(silence = 1)"];
+const NO_ACTION = "No action needed on your end for this task.";
+const RECOMMEND = /\(my recommendation = \d+\)$/;
 
 const readText = (file) => {
   try {
@@ -73,9 +74,8 @@ const finalReply = (input) => {
 const voiceFailures = (reply) => {
   const text = reply.trim();
   const failures = [];
-  if (!text.startsWith("TAB:")) failures.push("first line is not `TAB:`");
-  if (!/^ELIR:/m.test(text)) failures.push("no `ELIR:` line");
-  if (!ENDINGS.some((e) => text.endsWith(e))) failures.push("ending is neither the no-action line nor the banner");
+  if (!/^\*\*ELIR:.*\*\*$/m.test(text)) failures.push("no bold `**ELIR: ...**` line");
+  if (!text.endsWith(NO_ACTION) && !RECOMMEND.test(text)) failures.push("ending is neither the no-action line nor the banner");
   return failures;
 };
 

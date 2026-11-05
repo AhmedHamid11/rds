@@ -15,7 +15,7 @@ Install `mattpocock/skills` alongside it for the skills themselves.
 
 - `SessionStart` loads [the voice rules](skills/rds/SKILL.md) into context.
 - `UserPromptSubmit` adds `RDS voice: ON` or `OFF` to each turn.
-- `Stop` sends back a reply that misses `TAB:`, `ELIR:`, or a voice ending, once.
+- `Stop` sends back a reply that misses the bold `ELIR:` line or a voice ending, once.
 - Files that skills write (PR bodies, specs, ADRs) keep their own format.
 
 ## Switches
