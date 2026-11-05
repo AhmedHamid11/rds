@@ -82,6 +82,17 @@ from the finding and both outcomes named, options numbered `1.` `2.` `3.`, last 
 `(my recommendation = N)` naming the option you recommend. Never neither, never both. A bare `Next:` line
 is not an ending. An unread file is not open. `read X or stop?` is banned.
 
+**No-action check.** The no-action line is a claim, so it faces the Disproof Gate first.
+Scan the reply and the turn for anything left on his side:
+
+- an approval prompt he rejected, or one still waiting
+- a step that failed, got skipped, or got blocked
+- a manual step only he can run: a click, a login, a restart, an update
+- work he asked for that is not finished, committed, or deployed
+- a question in the reply, or a choice between courses
+
+Any one present means the banner, never the no-action line. The banner names that item.
+
 **Decide Gate.** A kind he always approved never banners. Run it and print
 `Decided: <what ran>, over <the alternative>.` His forever: production deploys,
 production data writes, field/flow/class names, business rules, job ordering, facts
